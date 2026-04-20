@@ -1,0 +1,10 @@
+{
+  "extraKnownMarketplaces": {
+    "cc-design": {
+      "source": {
+        "source": "github",
+        "repo": "ZeroZ-lab/cc-design"
+      }
+    }
+  }
+}
