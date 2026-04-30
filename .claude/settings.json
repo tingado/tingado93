@@ -6,5 +6,17 @@
         "repo": "ZeroZ-lab/cc-design"
       }
     }
+  },
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "corepack enable"
+          }
+        ]
+      }
+    ]
   }
 }
