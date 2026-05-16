@@ -6,5 +6,18 @@
         "repo": "ZeroZ-lab/cc-design"
       }
     }
+  },
+  "hooks": {
+    "Stop": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash /home/user/tingaod93/.claude/hooks/auto_save.sh"
+          }
+        ]
+      }
+    ]
   }
 }
