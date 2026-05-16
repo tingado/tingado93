@@ -58,6 +58,27 @@ Al terminar cada sesión de trabajo:
 
 ---
 
+## Roadmap de sesiones
+
+Archivo: `roadmap_sesiones.md` en la raíz del repo  
+Notion: https://www.notion.so/362e678b8e97812cbd76d76ffc43a062
+
+| Sesión | Nombre | Estado |
+|--------|--------|--------|
+| 00 | Nombre definitivo | 🟡 En curso |
+| 01 | Abogado laboral | ⬜ Pendiente |
+| 02 | Contador | ⬜ Pendiente |
+| 03 | Constitución SpA | ⬜ Pendiente |
+| 04 | Inicio actividades SII | ⬜ Pendiente |
+| 05 | Brief de marca | ⬜ Pendiente |
+| 06 | Infraestructura digital | ⬜ Pendiente |
+| 07 | Propuesta económica | ⬜ Pendiente |
+| 08 | Contrato de servicios | ⬜ Pendiente |
+| 09 | Primer proyecto | ⬜ Pendiente |
+| M | F29 mensual | 🔁 Recurrente |
+
+---
+
 ## Agentes disponibles (slash commands)
 
 - `/empresa` — muestra el estado completo del proyecto
