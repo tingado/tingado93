@@ -10,14 +10,14 @@
 
 :root {
   --rosa: #e91e8c; --rosa2: #ff4db8;
-  --verde: #00c853; --dorado: #f5bc00;
-  --rojo: #ff3d5a; --plata: #9eadc2; --bronce: #cd7f32;
+  --verde: #16a34a; --dorado: #d97706;
+  --rojo: #dc2626; --plata: #6b7280; --bronce: #92400e;
   --wa: #25d366;
-  --bg: #0a0a0a; --panel: rgba(0,0,0,0.82);
-  --card: rgba(255,255,255,0.06);
-  --card-hover: rgba(255,255,255,0.10);
-  --border: rgba(255,255,255,0.10);
-  --text: #f0f4ff; --muted: #8892a4;
+  --bg: #faf7f2; --panel: #ffffff;
+  --card: #ffffff;
+  --card-hover: #fdf2f8;
+  --border: #e5e7eb;
+  --text: #111827; --muted: #6b7280;
   --sidebar-w: 280px;
 }
 
@@ -27,15 +27,6 @@ body {
   font-family: 'Outfit', sans-serif;
   background: var(--bg); color: var(--text);
   min-height: 100vh;
-  background-image: url('https://images.unsplash.com/photo-1508098682722-e99c43a406b2?w=1920&q=80');
-  background-size: cover;
-  background-position: center;
-  background-attachment: fixed;
-}
-body::before {
-  content:''; position:fixed; inset:0;
-  background: linear-gradient(135deg, rgba(0,0,0,0.88) 0%, rgba(0,0,0,0.75) 100%);
-  z-index:0;
 }
 
 /* ══ LAYOUT ══ */
@@ -45,7 +36,6 @@ body::before {
 .sidebar {
   width: var(--sidebar-w); flex-shrink:0;
   background: var(--panel);
-  backdrop-filter: blur(20px);
   border-right: 1px solid var(--border);
   display: flex; flex-direction: column;
   position: sticky; top:0; height:100vh;
@@ -90,10 +80,10 @@ body::before {
 .lb-item {
   display:flex; align-items:center; gap:8px;
   padding:8px 10px; border-radius:8px;
-  background:var(--card); border:1px solid var(--border);
+  background:#f9fafb; border:1px solid var(--border);
   transition:all 0.2s;
 }
-.lb-item:hover { background:var(--card-hover); }
+.lb-item:hover { background:#fdf2f8; }
 .lb-rank {
   font-family:'Bebas Neue',sans-serif; font-size:1rem;
   width:24px; text-align:center; flex-shrink:0;
@@ -116,11 +106,12 @@ body::before {
 /* COUNTDOWN */
 .countdown-bar {
   display:flex; align-items:center; justify-content:center; gap:1rem;
-  background: linear-gradient(135deg, rgba(233,30,140,0.15), rgba(245,188,0,0.08));
-  border: 1px solid rgba(233,30,140,0.3); border-radius:14px;
+  background: linear-gradient(135deg, #fdf2f8, #fff7ed);
+  border: 1px solid #fbcfe8; border-radius:14px;
   padding: 1rem 1.5rem; margin-bottom:1.25rem; flex-wrap:wrap;
 }
 .cd-label { font-size:12px; font-weight:700; color:var(--muted); letter-spacing:2px; text-transform:uppercase; flex-shrink:0; }
+
 .cd-units { display:flex; gap:0.75rem; align-items:center; }
 .cd-unit { text-align:center; }
 .cd-num { font-family:'Bebas Neue',sans-serif; font-size:2.2rem; line-height:1; color:var(--dorado); display:block; }
@@ -130,8 +121,8 @@ body::before {
 
 /* TICKER */
 .ticker-wrap {
-  background:rgba(0,0,0,0.5); backdrop-filter:blur(10px);
-  border:1px solid rgba(233,30,140,0.3); border-radius:12px;
+  background:#1f0a14;
+  border-radius:12px;
   overflow:hidden; display:flex; align-items:center;
   margin-bottom:1.25rem;
 }
@@ -147,7 +138,7 @@ body::before {
   mask-image:linear-gradient(90deg,transparent 0%,black 5%,black 95%,transparent 100%);
 }
 .ticker-content {
-  display:flex; animation:ticker 90s linear infinite;
+  display:flex; animation:ticker 35s linear infinite;
   height:100%; align-items:center; white-space:nowrap;
 }
 .ticker-item { flex-shrink:0; padding:0 2.5rem; font-size:13px; color:#ffb3d9; }
@@ -170,7 +161,7 @@ body::before {
 }
 .view-tabs {
   display:flex; gap:4px;
-  background:rgba(0,0,0,0.4); backdrop-filter:blur(10px);
+  background:#f3f4f6;
   padding:4px; border-radius:10px; border:1px solid var(--border);
 }
 .view-tab {
@@ -191,8 +182,9 @@ body::before {
 .matches-grid { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
 
 .match-card {
-  background:var(--card); backdrop-filter:blur(10px);
+  background:#fff;
   border:1px solid var(--border); border-radius:14px;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.05);
   padding:1rem; cursor:pointer;
   transition:all 0.25s; position:relative; overflow:hidden;
 }
@@ -201,9 +193,9 @@ body::before {
   background:linear-gradient(135deg, rgba(233,30,140,0.08), transparent);
   opacity:0; transition:opacity 0.2s;
 }
-.match-card:hover { border-color:rgba(233,30,140,0.4); transform:translateY(-2px); }
+.match-card:hover { border-color:var(--rosa); transform:translateY(-2px); box-shadow: 0 4px 12px rgba(233,30,140,0.12); }
 .match-card:hover::before { opacity:1; }
-.match-card.finished { border-color:rgba(0,200,83,0.2); }
+.match-card.finished { border-color:#bbf7d0; }
 .match-card.live { border-color:var(--rojo); animation:livePulse 2s ease infinite; }
 @keyframes livePulse { 0%,100%{border-color:var(--rojo)} 50%{border-color:rgba(255,61,90,0.3)} }
 
@@ -240,8 +232,9 @@ body::before {
 /* GRUPOS VIEW */
 .groups-grid { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
 .group-card {
-  background:var(--card); backdrop-filter:blur(10px);
+  background:#fff;
   border:1px solid var(--border); border-radius:14px; overflow:hidden;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.06);
 }
 .group-header {
   background:linear-gradient(135deg,var(--rosa),#c2006e);
@@ -255,7 +248,7 @@ body::before {
   padding:6px 14px; text-align:left; border-bottom:1px solid var(--border);
 }
 .group-table th:not(:first-child) { text-align:center; }
-.group-table td { padding:8px 14px; font-size:13px; border-bottom:1px solid rgba(255,255,255,0.03); }
+.group-table td { padding:8px 14px; font-size:13px; border-bottom:1px solid var(--border); color:var(--text); }
 .group-table td:not(:first-child) { text-align:center; color:var(--muted); font-size:12px; }
 .group-table tr:last-child td { border-bottom:none; }
 .group-table tr.clasif td { background:rgba(0,200,83,0.06); }
@@ -264,9 +257,10 @@ body::before {
 
 /* FORM */
 .form-card {
-  background:var(--card); backdrop-filter:blur(10px);
+  background:#ffffff;
   border:1px solid var(--border); border-radius:16px; padding:1.5rem;
   margin-bottom:1rem;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.07);
 }
 .form-title {
   font-family:'Bebas Neue',sans-serif; font-size:1.4rem;
@@ -274,18 +268,18 @@ body::before {
 }
 label { font-size:12px; font-weight:600; color:var(--muted); display:block; margin-bottom:5px; }
 input, select {
-  width:100%; background:rgba(255,255,255,0.08);
+  width:100%; background:#f9fafb;
   border:1px solid var(--border); border-radius:10px;
   color:var(--text); font-family:'Outfit',sans-serif; font-size:14px;
   padding:10px 13px; outline:none; margin-bottom:12px;
   transition:all 0.2s;
 }
-input:focus, select:focus { border-color:var(--rosa); background:rgba(255,255,255,0.12); }
-select option { background:#1a1a2e; }
+input:focus, select:focus { border-color:var(--rosa); background:#fff; }
+select option { background:#fff; }
 
 /* PRONÓSTICO */
 .pronostico-match {
-  background:var(--card); border:1px solid var(--border);
+  background:#f9fafb; border:1px solid var(--border);
   border-radius:12px; padding:1rem; margin-bottom:8px;
 }
 .pron-teams {
@@ -296,7 +290,7 @@ select option { background:#1a1a2e; }
 .pron-team-name.right { text-align:right; }
 .pron-score-input {
   width:44px; text-align:center;
-  background:rgba(255,255,255,0.1);
+  background:#fff;
   border:1px solid var(--border); border-radius:8px;
   color:var(--text); font-size:1.2rem; font-weight:700;
   padding:6px 4px; margin-bottom:0;
