@@ -14,6 +14,20 @@ El usuario está construyendo **"La Polla Mundialera 2026"**, un juego de predic
 
 ---
 
+## 🔧 ACCIÓN PENDIENTE PARA LA PRÓXIMA SESIÓN: Migrar al repo correcto
+
+> **El usuario ha solicitado que las próximas sesiones trabajen directamente en `tingado/PollaMundial2026`** en vez de usar `tingado/tingaod93` como intermediario.
+
+**Por qué es importante:** Actualmente Claude Code solo tiene acceso MCP a `tingado/tingaod93`, lo que obliga a preparar los cambios aquí y que el usuario los aplique manualmente en `PollaMundial2026`. Si se configura `tingado/PollaMundial2026` como el repo permitido en la siguiente sesión (al crear el entorno en claude.ai/code), Claude podrá editar `index.html` directamente.
+
+**Para la próxima sesión en claude.ai/code:**
+1. Al crear el entorno (o en la configuración), conectar el repo `tingado/PollaMundial2026` en vez de `tingado/tingaod93`
+2. Esto permitirá editar `index.html` directo vía GitHub MCP y hacer push sin pasos manuales intermedios
+
+**Mientras tanto**, los archivos actualizados están disponibles en este repo en `PollaMundial2026/`.
+
+---
+
 ## Estado actual del backend (Apps Script)
 
 El archivo `PollaMundial2026/apps-script.gs` en este repo contiene el código **completo y actualizado** listo para reemplazar el Apps Script desplegado. Incluye:
