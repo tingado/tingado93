@@ -9,7 +9,7 @@
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 
 :root {
-  --rosa: #e91e8c; --rosa2: #ff4db8;
+  --rosa: #dc2626; --rosa2: #ef4444;
   --verde: #16a34a; --dorado: #d97706;
   --rojo: #dc2626; --plata: #6b7280; --bronce: #92400e;
   --wa: #25d366;
@@ -138,7 +138,7 @@ body {
   mask-image:linear-gradient(90deg,transparent 0%,black 5%,black 95%,transparent 100%);
 }
 .ticker-content {
-  display:flex; animation:ticker 35s linear infinite;
+  display:flex; animation:ticker 22s linear infinite;
   height:100%; align-items:center; white-space:nowrap;
 }
 .ticker-item { flex-shrink:0; padding:0 2.5rem; font-size:13px; color:#ffb3d9; }
@@ -228,6 +228,7 @@ body {
   margin-top:8px; padding-top:8px;
   border-top:1px solid var(--border);
 }
+.match-channels { font-size:10px; color:var(--rosa); margin-top:3px; font-weight:600; }
 
 /* GRUPOS VIEW */
 .groups-grid { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
@@ -613,17 +614,15 @@ select option { background:#fff; }
           <button class="view-tab" onclick="setMatchView('group',this)">Por Grupo</button>
         </div>
       </div>
-      <div style="background:#fdf2f8;border:1px solid #fbcfe8;border-radius:12px;padding:12px 16px;margin-bottom:1rem;font-size:13px;">
+      <div style="background:#fef2f2;border:1px solid #fecaca;border-radius:12px;padding:12px 16px;margin-bottom:1rem;font-size:13px;">
         <strong style="color:var(--rosa);">📺 ¿Dónde ver en Chile?</strong>
-        <span style="color:var(--muted);margin-left:8px;">Canales confirmados o esperados para el Mundial 2026:</span>
+        <span style="color:var(--muted);margin-left:8px;">Canales confirmados para la Fase de Grupos:</span>
         <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:8px;">
-          <span style="background:#fff;border:1px solid var(--border);border-radius:20px;padding:4px 12px;font-weight:600;">📡 TVN</span>
-          <span style="background:#fff;border:1px solid var(--border);border-radius:20px;padding:4px 12px;font-weight:600;">📺 Canal 13</span>
-          <span style="background:#fff;border:1px solid var(--border);border-radius:20px;padding:4px 12px;font-weight:600;">🛰️ DirecTV Sports</span>
-          <span style="background:#fff;border:1px solid var(--border);border-radius:20px;padding:4px 12px;font-weight:600;">▶️ Star+</span>
-          <span style="background:#fff;border:1px solid var(--border);border-radius:20px;padding:4px 12px;font-weight:600;">🟠 TNT Sports</span>
+          <span style="background:#fff;border:1px solid var(--border);border-radius:20px;padding:4px 12px;font-weight:700;color:#1a1a2a;">🟢 DSports</span>
+          <span style="background:#fff;border:1px solid var(--border);border-radius:20px;padding:4px 12px;font-weight:700;color:#1a1a2a;">📺 ChileVisión</span>
+          <span style="background:#fff;border:1px solid var(--border);border-radius:20px;padding:4px 12px;font-weight:700;color:#1a1a2a;">▶️ Disney+</span>
         </div>
-        <div style="color:var(--muted);font-size:11px;margin-top:6px;">⚠️ Derechos de transmisión por confirmar. TVN transmitió Qatar 2022 en Chile.</div>
+        <div style="color:var(--muted);font-size:11px;margin-top:6px;">📌 Cada partido muestra su canal debajo de la sede. DGO incluye Paramount+.</div>
       </div>
       <div id="matches-container"></div>
     </div>
@@ -876,78 +875,81 @@ const TODOS_EQUIPOS = Object.keys(FLAGS).sort((a,b)=>a.localeCompare(b,'es'));
 // CALENDARIO
 // ══════════════════════════════════════════════════════════
 const PARTIDOS = [
-  {id:'A1',fecha:'2026-06-11',hora:'15:00',grupo:'A',local:'México',visita:'Sudáfrica',sede:'Ciudad de México, MEX'},
-  {id:'A2',fecha:'2026-06-11',hora:'22:00',grupo:'A',local:'Corea del Sur',visita:'Chequia',sede:'Guadalajara, MEX'},
-  {id:'B1',fecha:'2026-06-12',hora:'15:00',grupo:'B',local:'Canadá',visita:'Bosnia y Herzegovina',sede:'Toronto, CAN'},
-  {id:'D1',fecha:'2026-06-12',hora:'21:00',grupo:'D',local:'Estados Unidos',visita:'Paraguay',sede:'Los Ángeles, USA'},
-  {id:'B2',fecha:'2026-06-13',hora:'15:00',grupo:'B',local:'Qatar',visita:'Suiza',sede:'San Francisco, USA'},
-  {id:'C1',fecha:'2026-06-13',hora:'18:00',grupo:'C',local:'Brasil',visita:'Marruecos',sede:'Nueva York, USA'},
-  {id:'C2',fecha:'2026-06-13',hora:'21:00',grupo:'C',local:'Haití',visita:'Escocia',sede:'Boston, USA'},
-  {id:'J1',fecha:'2026-06-13',hora:'12:00',grupo:'J',local:'Argentina',visita:'Algeria',sede:'MetLife, USA'},
-  {id:'K1',fecha:'2026-06-13',hora:'19:00',grupo:'K',local:'Portugal',visita:'Colombia',sede:'Houston, USA'},
-  {id:'D2',fecha:'2026-06-14',hora:'15:00',grupo:'D',local:'Australia',visita:'Turquía',sede:'Dallas, USA'},
-  {id:'E1',fecha:'2026-06-14',hora:'18:00',grupo:'E',local:'Alemania',visita:'Ecuador',sede:'Filadelfia, USA'},
-  {id:'E2',fecha:'2026-06-14',hora:'21:00',grupo:'E',local:'Costa de Marfil',visita:'Curazao',sede:'Kansas City, USA'},
-  {id:'K2',fecha:'2026-06-14',hora:'12:00',grupo:'K',local:'Uzbekistán',visita:'R.D. del Congo',sede:'Atlanta, USA'},
-  {id:'F1',fecha:'2026-06-15',hora:'15:00',grupo:'F',local:'Países Bajos',visita:'Japón',sede:'Seattle, USA'},
-  {id:'F2',fecha:'2026-06-15',hora:'18:00',grupo:'F',local:'Túnez',visita:'Suecia',sede:'Atlanta, USA'},
-  {id:'G1',fecha:'2026-06-15',hora:'21:00',grupo:'G',local:'Bélgica',visita:'Egipto',sede:'Miami, USA'},
-  {id:'L1',fecha:'2026-06-15',hora:'12:00',grupo:'L',local:'Inglaterra',visita:'Croacia',sede:'Dallas, USA'},
-  {id:'L2',fecha:'2026-06-15',hora:'19:00',grupo:'L',local:'Ghana',visita:'Panamá',sede:'Kansas City, USA'},
-  {id:'G2',fecha:'2026-06-16',hora:'15:00',grupo:'G',local:'Irán',visita:'Nueva Zelanda',sede:'San Francisco, USA'},
-  {id:'H1',fecha:'2026-06-16',hora:'18:00',grupo:'H',local:'España',visita:'Arabia Saudita',sede:'Los Ángeles, USA'},
-  {id:'H2',fecha:'2026-06-16',hora:'21:00',grupo:'H',local:'Uruguay',visita:'Cabo Verde',sede:'Dallas, USA'},
-  {id:'I1',fecha:'2026-06-17',hora:'15:00',grupo:'I',local:'Francia',visita:'Senegal',sede:'Nueva York, USA'},
-  {id:'I2',fecha:'2026-06-17',hora:'18:00',grupo:'I',local:'Noruega',visita:'Irak',sede:'Boston, USA'},
-  {id:'J2',fecha:'2026-06-17',hora:'21:00',grupo:'J',local:'Austria',visita:'Jordania',sede:'Kansas City, USA'},
-  {id:'A3',fecha:'2026-06-18',hora:'12:00',grupo:'A',local:'Chequia',visita:'Sudáfrica',sede:'Atlanta, USA'},
-  {id:'B3',fecha:'2026-06-18',hora:'15:00',grupo:'B',local:'Suiza',visita:'Bosnia y Herzegovina',sede:'Seattle, USA'},
-  {id:'B4',fecha:'2026-06-18',hora:'18:00',grupo:'B',local:'Canadá',visita:'Qatar',sede:'Toronto, CAN'},
-  {id:'A4',fecha:'2026-06-18',hora:'21:00',grupo:'A',local:'México',visita:'Corea del Sur',sede:'Guadalajara, MEX'},
-  {id:'C3',fecha:'2026-06-19',hora:'15:00',grupo:'C',local:'Escocia',visita:'Marruecos',sede:'Miami, USA'},
-  {id:'C4',fecha:'2026-06-19',hora:'18:00',grupo:'C',local:'Brasil',visita:'Haití',sede:'Dallas, USA'},
-  {id:'J3',fecha:'2026-06-19',hora:'21:00',grupo:'J',local:'Argentina',visita:'Austria',sede:'Filadelfia, USA'},
-  {id:'D3',fecha:'2026-06-20',hora:'15:00',grupo:'D',local:'Paraguay',visita:'Australia',sede:'Filadelfia, USA'},
-  {id:'D4',fecha:'2026-06-20',hora:'18:00',grupo:'D',local:'Turquía',visita:'Estados Unidos',sede:'Seattle, USA'},
-  {id:'E3',fecha:'2026-06-20',hora:'21:00',grupo:'E',local:'Ecuador',visita:'Curazao',sede:'Houston, USA'},
-  {id:'E4',fecha:'2026-06-21',hora:'15:00',grupo:'E',local:'Alemania',visita:'Costa de Marfil',sede:'San Francisco, USA'},
-  {id:'F3',fecha:'2026-06-21',hora:'18:00',grupo:'F',local:'Japón',visita:'Túnez',sede:'Los Ángeles, USA'},
-  {id:'F4',fecha:'2026-06-21',hora:'21:00',grupo:'F',local:'Suecia',visita:'Países Bajos',sede:'MetLife, USA'},
-  {id:'G3',fecha:'2026-06-22',hora:'15:00',grupo:'G',local:'Egipto',visita:'Irán',sede:'Kansas City, USA'},
-  {id:'G4',fecha:'2026-06-22',hora:'18:00',grupo:'G',local:'Nueva Zelanda',visita:'Bélgica',sede:'Atlanta, USA'},
-  {id:'H3',fecha:'2026-06-22',hora:'21:00',grupo:'H',local:'Arabia Saudita',visita:'Cabo Verde',sede:'Miami, USA'},
-  {id:'H4',fecha:'2026-06-23',hora:'15:00',grupo:'H',local:'España',visita:'Uruguay',sede:'Los Ángeles, USA'},
-  {id:'I3',fecha:'2026-06-23',hora:'18:00',grupo:'I',local:'Senegal',visita:'Irak',sede:'Houston, USA'},
-  {id:'I4',fecha:'2026-06-23',hora:'21:00',grupo:'I',local:'Francia',visita:'Noruega',sede:'Boston, USA'},
-  {id:'A5',fecha:'2026-06-24',hora:'15:00',grupo:'A',local:'Chequia',visita:'México',sede:'Ciudad de México, MEX'},
-  {id:'A6',fecha:'2026-06-24',hora:'15:00',grupo:'A',local:'Sudáfrica',visita:'Corea del Sur',sede:'Monterrey, MEX'},
-  {id:'B5',fecha:'2026-06-24',hora:'15:00',grupo:'B',local:'Bosnia y Herzegovina',visita:'Qatar',sede:'Vancouver, CAN'},
-  {id:'B6',fecha:'2026-06-24',hora:'15:00',grupo:'B',local:'Suiza',visita:'Canadá',sede:'Toronto, CAN'},
-  {id:'J4',fecha:'2026-06-24',hora:'21:00',grupo:'J',local:'Algeria',visita:'Jordania',sede:'Atlanta, USA'},
-  {id:'K3',fecha:'2026-06-24',hora:'15:00',grupo:'K',local:'Portugal',visita:'Uzbekistán',sede:'Boston, USA'},
-  {id:'K4',fecha:'2026-06-24',hora:'21:00',grupo:'K',local:'Colombia',visita:'R.D. del Congo',sede:'San Francisco, USA'},
-  {id:'L3',fecha:'2026-06-24',hora:'15:00',grupo:'L',local:'Inglaterra',visita:'Ghana',sede:'Dallas, USA'},
-  {id:'L4',fecha:'2026-06-24',hora:'21:00',grupo:'L',local:'Croacia',visita:'Panamá',sede:'Miami, USA'},
-  {id:'C5',fecha:'2026-06-25',hora:'15:00',grupo:'C',local:'Marruecos',visita:'Haití',sede:'Dallas, USA'},
-  {id:'C6',fecha:'2026-06-25',hora:'15:00',grupo:'C',local:'Escocia',visita:'Brasil',sede:'Filadelfia, USA'},
-  {id:'D5',fecha:'2026-06-25',hora:'15:00',grupo:'D',local:'Australia',visita:'Estados Unidos',sede:'Los Ángeles, USA'},
-  {id:'D6',fecha:'2026-06-25',hora:'15:00',grupo:'D',local:'Paraguay',visita:'Turquía',sede:'Kansas City, USA'},
-  {id:'E5',fecha:'2026-06-26',hora:'15:00',grupo:'E',local:'Curazao',visita:'Alemania',sede:'Seattle, USA'},
-  {id:'E6',fecha:'2026-06-26',hora:'15:00',grupo:'E',local:'Ecuador',visita:'Costa de Marfil',sede:'Atlanta, USA'},
-  {id:'F5',fecha:'2026-06-26',hora:'15:00',grupo:'F',local:'Japón',visita:'Suecia',sede:'San Francisco, USA'},
-  {id:'F6',fecha:'2026-06-26',hora:'15:00',grupo:'F',local:'Túnez',visita:'Países Bajos',sede:'MetLife, USA'},
-  {id:'G5',fecha:'2026-06-27',hora:'15:00',grupo:'G',local:'Egipto',visita:'Bélgica',sede:'Houston, USA'},
-  {id:'G6',fecha:'2026-06-27',hora:'15:00',grupo:'G',local:'Irán',visita:'Nueva Zelanda',sede:'Miami, USA'},
-  {id:'H5',fecha:'2026-06-27',hora:'15:00',grupo:'H',local:'Cabo Verde',visita:'España',sede:'Dallas, USA'},
-  {id:'H6',fecha:'2026-06-27',hora:'15:00',grupo:'H',local:'Uruguay',visita:'Arabia Saudita',sede:'Los Ángeles, USA'},
-  {id:'I5',fecha:'2026-06-27',hora:'15:00',grupo:'I',local:'Irak',visita:'Francia',sede:'Boston, USA'},
-  {id:'I6',fecha:'2026-06-27',hora:'15:00',grupo:'I',local:'Senegal',visita:'Noruega',sede:'MetLife, USA'},
-  {id:'J5',fecha:'2026-06-27',hora:'15:00',grupo:'J',local:'Algeria',visita:'Austria',sede:'Atlanta, USA'},
-  {id:'J6',fecha:'2026-06-27',hora:'15:00',grupo:'J',local:'Jordania',visita:'Argentina',sede:'Kansas City, USA'},
-  {id:'K5',fecha:'2026-06-27',hora:'15:00',grupo:'K',local:'Portugal',visita:'Colombia',sede:'Houston, USA'},
-  {id:'K6',fecha:'2026-06-27',hora:'15:00',grupo:'K',local:'Uzbekistán',visita:'R.D. del Congo',sede:'Atlanta, USA'},
-  {id:'L5',fecha:'2026-06-27',hora:'15:00',grupo:'L',local:'Inglaterra',visita:'Ghana',sede:'Dallas, USA'},
-  {id:'L6',fecha:'2026-06-27',hora:'15:00',grupo:'L',local:'Croacia',visita:'Panamá',sede:'Miami, USA'},
+  // JORNADA 1
+  {id:'A1',fecha:'2026-06-11',hora:'15:00',grupo:'A',local:'México',visita:'Sudáfrica',sede:'Ciudad de México, MEX',canales:['DSports','ChileVisión','Disney+']},
+  {id:'A2',fecha:'2026-06-11',hora:'22:00',grupo:'A',local:'Corea del Sur',visita:'Chequia',sede:'Guadalajara, MEX',canales:['DSports']},
+  {id:'B1',fecha:'2026-06-12',hora:'15:00',grupo:'B',local:'Canadá',visita:'Bosnia y Herzegovina',sede:'Toronto, CAN',canales:['DSports','ChileVisión']},
+  {id:'D1',fecha:'2026-06-12',hora:'21:00',grupo:'D',local:'Estados Unidos',visita:'Paraguay',sede:'Los Ángeles, USA',canales:['DSports','ChileVisión','Disney+']},
+  {id:'B2',fecha:'2026-06-13',hora:'15:00',grupo:'B',local:'Qatar',visita:'Suiza',sede:'San Francisco, USA',canales:['DSports']},
+  {id:'C1',fecha:'2026-06-13',hora:'18:00',grupo:'C',local:'Brasil',visita:'Marruecos',sede:'Nueva York, USA',canales:['DSports','ChileVisión','Disney+']},
+  {id:'C2',fecha:'2026-06-13',hora:'21:00',grupo:'C',local:'Haití',visita:'Escocia',sede:'Boston, USA',canales:['DSports']},
+  {id:'D2',fecha:'2026-06-14',hora:'00:00',grupo:'D',local:'Australia',visita:'Turquía',sede:'Dallas, USA',canales:['DSports']},
+  {id:'E1',fecha:'2026-06-14',hora:'13:00',grupo:'E',local:'Alemania',visita:'Curazao',sede:'Filadelfia, USA',canales:['DSports']},
+  {id:'F1',fecha:'2026-06-14',hora:'16:00',grupo:'F',local:'Países Bajos',visita:'Japón',sede:'Seattle, USA',canales:['DSports','ChileVisión']},
+  {id:'E2',fecha:'2026-06-14',hora:'19:00',grupo:'E',local:'Costa de Marfil',visita:'Ecuador',sede:'Kansas City, USA',canales:['DSports','ChileVisión','Disney+']},
+  {id:'F2',fecha:'2026-06-14',hora:'22:00',grupo:'F',local:'Suecia',visita:'Túnez',sede:'Atlanta, USA',canales:['DSports']},
+  {id:'H1',fecha:'2026-06-15',hora:'12:00',grupo:'H',local:'España',visita:'Cabo Verde',sede:'Los Ángeles, USA',canales:['DSports']},
+  {id:'G1',fecha:'2026-06-15',hora:'15:00',grupo:'G',local:'Bélgica',visita:'Egipto',sede:'Miami, USA',canales:['DSports','ChileVisión']},
+  {id:'H2',fecha:'2026-06-15',hora:'18:00',grupo:'H',local:'Arabia Saudita',visita:'Uruguay',sede:'Dallas, USA',canales:['DSports','ChileVisión','Disney+']},
+  {id:'G2',fecha:'2026-06-15',hora:'21:00',grupo:'G',local:'Irán',visita:'Nueva Zelanda',sede:'San Francisco, USA',canales:['DSports']},
+  {id:'I1',fecha:'2026-06-16',hora:'15:00',grupo:'I',local:'Francia',visita:'Senegal',sede:'Nueva York, USA',canales:['DSports','ChileVisión','Disney+']},
+  {id:'I2',fecha:'2026-06-16',hora:'18:00',grupo:'I',local:'Irak',visita:'Noruega',sede:'Boston, USA',canales:['DSports']},
+  {id:'J1',fecha:'2026-06-16',hora:'21:00',grupo:'J',local:'Argentina',visita:'Algeria',sede:'MetLife, USA',canales:['DSports','ChileVisión','Disney+']},
+  {id:'J2',fecha:'2026-06-17',hora:'00:00',grupo:'J',local:'Austria',visita:'Jordania',sede:'Kansas City, USA',canales:['DSports']},
+  {id:'K1',fecha:'2026-06-17',hora:'13:00',grupo:'K',local:'Portugal',visita:'R.D. del Congo',sede:'Houston, USA',canales:['DSports']},
+  {id:'L1',fecha:'2026-06-17',hora:'16:00',grupo:'L',local:'Inglaterra',visita:'Croacia',sede:'Dallas, USA',canales:['DSports','ChileVisión','Disney+']},
+  {id:'L2',fecha:'2026-06-17',hora:'19:00',grupo:'L',local:'Ghana',visita:'Panamá',sede:'Kansas City, USA',canales:['DSports']},
+  {id:'K2',fecha:'2026-06-17',hora:'22:00',grupo:'K',local:'Uzbekistán',visita:'Colombia',sede:'Atlanta, USA',canales:['DSports','ChileVisión','Disney+']},
+  // JORNADA 2
+  {id:'A3',fecha:'2026-06-18',hora:'12:00',grupo:'A',local:'Chequia',visita:'Sudáfrica',sede:'Atlanta, USA',canales:['DSports']},
+  {id:'B3',fecha:'2026-06-18',hora:'15:00',grupo:'B',local:'Suiza',visita:'Bosnia y Herzegovina',sede:'Seattle, USA',canales:['DSports','ChileVisión','Disney+']},
+  {id:'B4',fecha:'2026-06-18',hora:'18:00',grupo:'B',local:'Canadá',visita:'Qatar',sede:'Toronto, CAN',canales:['DSports','ChileVisión']},
+  {id:'A4',fecha:'2026-06-18',hora:'21:00',grupo:'A',local:'México',visita:'Corea del Sur',sede:'Guadalajara, MEX',canales:['DSports']},
+  {id:'D4',fecha:'2026-06-19',hora:'15:00',grupo:'D',local:'Estados Unidos',visita:'Australia',sede:'Los Ángeles, USA',canales:['DSports','ChileVisión']},
+  {id:'C3',fecha:'2026-06-19',hora:'18:00',grupo:'C',local:'Escocia',visita:'Marruecos',sede:'Miami, USA',canales:['DSports','ChileVisión','Disney+']},
+  {id:'C4',fecha:'2026-06-19',hora:'20:30',grupo:'C',local:'Brasil',visita:'Haití',sede:'Dallas, USA',canales:['DSports']},
+  {id:'D3',fecha:'2026-06-19',hora:'23:00',grupo:'D',local:'Turquía',visita:'Paraguay',sede:'Seattle, USA',canales:['DSports']},
+  {id:'F3',fecha:'2026-06-20',hora:'13:00',grupo:'F',local:'Países Bajos',visita:'Suecia',sede:'MetLife, USA',canales:['DSports']},
+  {id:'E4',fecha:'2026-06-20',hora:'16:00',grupo:'E',local:'Alemania',visita:'Costa de Marfil',sede:'San Francisco, USA',canales:['DSports','ChileVisión','Disney+']},
+  {id:'E3',fecha:'2026-06-20',hora:'20:00',grupo:'E',local:'Ecuador',visita:'Curazao',sede:'Houston, USA',canales:['DSports']},
+  {id:'F4',fecha:'2026-06-21',hora:'00:00',grupo:'F',local:'Túnez',visita:'Japón',sede:'Los Ángeles, USA',canales:['DSports','ChileVisión']},
+  {id:'H4',fecha:'2026-06-21',hora:'12:00',grupo:'H',local:'España',visita:'Arabia Saudita',sede:'Los Ángeles, USA',canales:['DSports','ChileVisión','Disney+']},
+  {id:'G3',fecha:'2026-06-21',hora:'15:00',grupo:'G',local:'Bélgica',visita:'Irán',sede:'Kansas City, USA',canales:['DSports','ChileVisión']},
+  {id:'H3',fecha:'2026-06-21',hora:'18:00',grupo:'H',local:'Uruguay',visita:'Cabo Verde',sede:'Dallas, USA',canales:['DSports']},
+  {id:'G4',fecha:'2026-06-21',hora:'21:00',grupo:'G',local:'Nueva Zelanda',visita:'Egipto',sede:'Atlanta, USA',canales:['DSports']},
+  {id:'J3',fecha:'2026-06-22',hora:'13:00',grupo:'J',local:'Argentina',visita:'Austria',sede:'Filadelfia, USA',canales:['DSports','ChileVisión','Disney+']},
+  {id:'I3',fecha:'2026-06-22',hora:'17:00',grupo:'I',local:'Francia',visita:'Irak',sede:'Boston, USA',canales:['DSports']},
+  {id:'I4',fecha:'2026-06-22',hora:'20:00',grupo:'I',local:'Noruega',visita:'Senegal',sede:'MetLife, USA',canales:['DSports','ChileVisión']},
+  {id:'J4',fecha:'2026-06-22',hora:'23:00',grupo:'J',local:'Jordania',visita:'Algeria',sede:'Atlanta, USA',canales:['DSports']},
+  {id:'K3',fecha:'2026-06-23',hora:'13:00',grupo:'K',local:'Portugal',visita:'Uzbekistán',sede:'Boston, USA',canales:['DSports']},
+  {id:'L3',fecha:'2026-06-23',hora:'16:00',grupo:'L',local:'Inglaterra',visita:'Ghana',sede:'Dallas, USA',canales:['DSports','ChileVisión','Disney+']},
+  {id:'L4',fecha:'2026-06-23',hora:'19:00',grupo:'L',local:'Panamá',visita:'Croacia',sede:'Miami, USA',canales:['DSports','ChileVisión']},
+  {id:'K4',fecha:'2026-06-23',hora:'22:00',grupo:'K',local:'Colombia',visita:'R.D. del Congo',sede:'San Francisco, USA',canales:['DSports']},
+  // JORNADA 3
+  {id:'B5',fecha:'2026-06-24',hora:'15:00',grupo:'B',local:'Bosnia y Herzegovina',visita:'Qatar',sede:'Vancouver, CAN',canales:['DSports']},
+  {id:'B6',fecha:'2026-06-24',hora:'15:00',grupo:'B',local:'Suiza',visita:'Canadá',sede:'Toronto, CAN',canales:['DSports']},
+  {id:'C5',fecha:'2026-06-24',hora:'18:00',grupo:'C',local:'Marruecos',visita:'Haití',sede:'Dallas, USA',canales:['DSports']},
+  {id:'C6',fecha:'2026-06-24',hora:'18:00',grupo:'C',local:'Escocia',visita:'Brasil',sede:'Filadelfia, USA',canales:['DSports','ChileVisión','Disney+']},
+  {id:'A5',fecha:'2026-06-24',hora:'21:00',grupo:'A',local:'Sudáfrica',visita:'Corea del Sur',sede:'Monterrey, MEX',canales:['DSports']},
+  {id:'A6',fecha:'2026-06-24',hora:'21:00',grupo:'A',local:'Chequia',visita:'México',sede:'Ciudad de México, MEX',canales:['DSports','ChileVisión']},
+  {id:'E5',fecha:'2026-06-25',hora:'16:00',grupo:'E',local:'Curazao',visita:'Costa de Marfil',sede:'Seattle, USA',canales:['DSports']},
+  {id:'E6',fecha:'2026-06-25',hora:'16:00',grupo:'E',local:'Alemania',visita:'Ecuador',sede:'Atlanta, USA',canales:['DSports','ChileVisión','Disney+']},
+  {id:'F5',fecha:'2026-06-25',hora:'19:00',grupo:'F',local:'Túnez',visita:'Países Bajos',sede:'MetLife, USA',canales:['DSports','ChileVisión']},
+  {id:'F6',fecha:'2026-06-25',hora:'19:00',grupo:'F',local:'Japón',visita:'Suecia',sede:'San Francisco, USA',canales:['DSports']},
+  {id:'D5',fecha:'2026-06-25',hora:'22:00',grupo:'D',local:'Paraguay',visita:'Australia',sede:'Filadelfia, USA',canales:['DSports','ChileVisión','Disney+']},
+  {id:'D6',fecha:'2026-06-25',hora:'22:00',grupo:'D',local:'Turquía',visita:'Estados Unidos',sede:'Seattle, USA',canales:['DSports']},
+  {id:'I5',fecha:'2026-06-26',hora:'15:00',grupo:'I',local:'Senegal',visita:'Irak',sede:'Houston, USA',canales:['DSports']},
+  {id:'I6',fecha:'2026-06-26',hora:'15:00',grupo:'I',local:'Noruega',visita:'Francia',sede:'Boston, USA',canales:['DSports','ChileVisión','Disney+']},
+  {id:'H5',fecha:'2026-06-26',hora:'20:00',grupo:'H',local:'Uruguay',visita:'España',sede:'Los Ángeles, USA',canales:['DSports','ChileVisión','Disney+']},
+  {id:'H6',fecha:'2026-06-26',hora:'20:00',grupo:'H',local:'Cabo Verde',visita:'Arabia Saudita',sede:'Dallas, USA',canales:['DSports']},
+  {id:'G5',fecha:'2026-06-26',hora:'23:00',grupo:'G',local:'Nueva Zelanda',visita:'Bélgica',sede:'Atlanta, USA',canales:['DSports']},
+  {id:'G6',fecha:'2026-06-26',hora:'23:00',grupo:'G',local:'Egipto',visita:'Irán',sede:'Kansas City, USA',canales:['DSports']},
+  {id:'L5',fecha:'2026-06-27',hora:'17:00',grupo:'L',local:'Panamá',visita:'Inglaterra',sede:'Dallas, USA',canales:['DSports']},
+  {id:'L6',fecha:'2026-06-27',hora:'17:00',grupo:'L',local:'Croacia',visita:'Ghana',sede:'Miami, USA',canales:['DSports']},
+  {id:'K5',fecha:'2026-06-27',hora:'19:30',grupo:'K',local:'R.D. del Congo',visita:'Uzbekistán',sede:'Atlanta, USA',canales:['DSports']},
+  {id:'K6',fecha:'2026-06-27',hora:'19:30',grupo:'K',local:'Colombia',visita:'Portugal',sede:'San Francisco, USA',canales:['DSports','ChileVisión','Disney+']},
+  {id:'J5',fecha:'2026-06-27',hora:'22:00',grupo:'J',local:'Algeria',visita:'Austria',sede:'Atlanta, USA',canales:['DSports']},
+  {id:'J6',fecha:'2026-06-27',hora:'22:00',grupo:'J',local:'Jordania',visita:'Argentina',sede:'Kansas City, USA',canales:['DSports']},
 ];
 
 const GRUPOS = {
@@ -1228,6 +1230,7 @@ function renderMatchCard(p){
         </div>
       </div>
       <div class="match-venue">📍 ${p.sede}</div>
+      ${p.canales&&p.canales.length?`<div class="match-channels">📺 ${p.canales.join(' · ')}</div>`:''}
     </div>`;
 }
 
