@@ -201,6 +201,70 @@ Pasos:
 
 ---
 
+## ALTERNATIVA — Publicar en GitHub Pages (en vez de Netlify)
+
+GitHub Pages es gratis, fácil, y no requiere arrastrar archivos cada vez que actualizas.
+
+### ¿Qué necesitas?
+- Cuenta en **github.com** (gratis)
+- El archivo `index.html`
+
+### Paso a paso
+
+**1. Crear una cuenta en GitHub**
+1. Ve a **github.com** → Sign up
+2. Elige un nombre de usuario (será parte de tu URL: `tuusuario.github.io`)
+3. Verifica tu email
+
+**2. Crear un repositorio**
+1. Clic en el botón verde **"New"** (o el ícono `+` arriba a la derecha)
+2. Nombre del repositorio: `polla2026` (o cualquier nombre sin espacios)
+3. Marca **"Public"** (GitHub Pages requiere repositorio público en plan gratuito)
+4. Marca **"Add a README file"**
+5. Clic en **"Create repository"**
+
+**3. Subir el index.html**
+1. En tu repositorio, clic en **"Add file"** → **"Upload files"**
+2. Arrastra el archivo `index.html`
+3. Abajo escribe en "Commit message": `Add polla app`
+4. Clic en **"Commit changes"**
+
+**4. Activar GitHub Pages**
+1. En tu repositorio, clic en **"Settings"** (pestaña arriba)
+2. En el menú izquierdo, clic en **"Pages"**
+3. En "Source", selecciona **"Deploy from a branch"**
+4. En "Branch", selecciona **"main"** y carpeta **"/ (root)"**
+5. Clic en **"Save"**
+6. Espera 1-2 minutos
+
+**5. Obtener tu URL**
+Tu app estará disponible en:
+```
+https://TUUSUARIO.github.io/polla2026/
+```
+GitHub Pages lo muestra en la sección "Pages" de Settings.
+
+### Actualizar cuando haya cambios
+1. Ve a tu repositorio en github.com
+2. Clic en `index.html` → ícono del lápiz (Edit)
+3. Borra todo → Pega el nuevo contenido
+4. Clic en **"Commit changes"**
+5. En ~1 minuto el sitio se actualiza solo
+
+### Comparación Netlify vs GitHub Pages
+
+| | Netlify | GitHub Pages |
+|---|---|---|
+| Velocidad deploy | ~30 seg | ~1-2 min |
+| Arrastrar archivo | ✅ Drag & drop | Sube por web o git |
+| URL personalizada | `tuapp.netlify.app` | `user.github.io/repo` |
+| Control de versiones | No | Sí (historial completo) |
+| Precio | Gratis | Gratis |
+
+> 💡 **Recomendación**: Si vas a actualizar el `index.html` frecuentemente, GitHub Pages es mejor porque guarda el historial de cambios y puedes volver a versiones anteriores.
+
+---
+
 ## Problemas frecuentes
 
 | Problema | Solución |
