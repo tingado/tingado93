@@ -28,6 +28,11 @@ con nutrición. Se contemplan como fases futuras.
 | Familia de dispositivo | **Venu / Vivoactive** (AMOLED; Venu 2/3 y Vivoactive 5 con altavoz) |
 | Lenguaje | Monkey C |
 | SDK | Connect IQ SDK (última versión estable) |
+| Creación de rutinas | **En el móvil** (Connect IQ App Settings en Garmin Connect) → sincroniza al reloj |
+
+> **Restricción de memoria observada:** en el reloj del usuario quedan **~7.41 MB** libres.
+> La app debe ser **ligera**: datos compactos, sin recursos pesados innecesarios y carga de
+> sesiones bajo demanda.
 
 ### Nota técnica sobre "que diga sesiones completas"
 Connect IQ **no expone text-to-speech (TTS)** para frases arbitrarias. Los avisos se logran con:
@@ -36,6 +41,22 @@ Connect IQ **no expone text-to-speech (TTS)** para frases arbitrarias. Los aviso
 3. **Pantalla clara**: mensaje grande tipo **"SESIÓN COMPLETA ✅"** con color y animación.
 4. **(Opcional) Audio pregrabado**: clips `.mp3`/`.wav` incluidos como recursos y reproducidos por el
    altavoz en Venu 2/3 y Vivoactive 5. Es lo más cercano a una "voz" real.
+
+---
+
+## 2.b Diferenciadores vs. apps de referencia
+
+Apps de referencia probadas por el usuario que **no lo convencen al 100%**:
+_Gym Workout Tracker_, _Gym – Set Counter with Rest Timer_, _KTrain for Kieser_.
+
+Problemas detectados (los 4 confirmados por el usuario) y cómo los resolvemos:
+
+| Problema en apps existentes | Solución en nuestra app |
+|---|---|
+| **Captura de datos tediosa** (girar ruedas / +/- a mitad de serie) | La rutina viene **prearmada desde el móvil**; en el reloj el gesto principal es **un botón grande "Serie hecha"**. Ajuste de carga solo si hace falta, con pasos rápidos (±2.5 kg). Mínimo input durante el esfuerzo. |
+| **No hay sesiones prearmadas** | **Creador de rutinas en el móvil** (App Settings) + rutinas de ejemplo; el reloj solo **ejecuta** lo ya definido. |
+| **Avisos / pausas pobres** | Módulo `Feedback` fuerte: **vibración marcada + tonos diferenciados por evento + pantalla grande + audio pregrabado** (modelos con altavoz). Descanso con **cuenta regresiva prominente**. |
+| **UI fea / poco clara** | Diseño **AMOLED limpio**: un dato principal por pantalla, números grandes, alto contraste, **color por estado** (ejercicio / descanso / completo). |
 
 ---
 
@@ -72,9 +93,22 @@ Serie
  └─ descansoPost (seg, opcional override)
 ```
 
-- Almacenamiento local con **`Toybox.Application.Storage`** (persistencia entre sesiones).
-- Sesiones predefinidas empaquetadas como **recursos JSON** (`resources/settings` o `resources/strings`).
-- (Futuro) edición de sesiones desde el móvil vía **App Settings** de Connect IQ.
+- Almacenamiento local con **`Toybox.Application.Storage`** / `Properties` (persistencia entre sesiones).
+- Sesiones de ejemplo empaquetadas como **recursos** para el MVP.
+- **Sincronización desde el móvil vía App Settings** (ver sección 4.b): la rutina definida en el
+  teléfono llega al reloj como `Properties` y se parsea al modelo de arriba.
+
+### 4.b Creación de rutinas desde el móvil — enfoque realista
+
+App Settings de Connect IQ es un editor de **ajustes** (listas, números, texto, toggles) dentro de
+Garmin Connect; **no** es un constructor visual libre. Por eso lo escalonamos:
+
+- **v1 (simple):** rutinas de ejemplo ya incluidas + App Settings para **elegir rutina** y **ajustar
+  parámetros** (descanso por defecto, unidades kg/lb, volumen de avisos).
+- **v2 (rutina propia):** definir ejercicios/series/cargas desde App Settings usando campos de lista y
+  números; internamente se serializa a un **string JSON compacto** que el reloj parsea.
+- **v3 (opcional):** evaluar una **app/página companion** para un editor visual completo si App
+  Settings se queda corto para tu flujo.
 
 ---
 
@@ -113,11 +147,11 @@ App Connect IQ sigue **App → View → Delegate (Input)**:
 - [ ] UI pulida para AMOLED (colores, tipografías, layout táctil).
 - **Entregable:** app usable y agradable en dispositivo real.
 
-### Fase 3 — Personalización
-- [ ] Edición de sesiones/ejercicios desde **App Settings** (móvil).
+### Fase 3 — Personalización desde el móvil
+- [ ] **App Settings v1:** elegir rutina + ajustes (descanso por defecto, unidades kg/lb, volumen de avisos).
+- [ ] **App Settings v2:** definir rutina propia (ejercicios/series/cargas) serializada a JSON compacto → parseo en el reloj.
 - [ ] Historial simple de sesiones completadas (fecha + duración).
-- [ ] Ajustes: duración de descanso por defecto, unidades (kg/lb), volumen.
-- **Entregable:** el usuario crea sus propias sesiones sin tocar código.
+- **Entregable:** el usuario arma y sincroniza sus propias sesiones desde el teléfono, sin tocar código.
 
 ### Fase 4 — Pruebas, pulido y publicación
 - [ ] Pruebas en **simulador** para cada perfil de dispositivo.
