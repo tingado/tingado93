@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<iq:manifest xmlns:iq="http://www.garmin.com/xml/connectiq" version="3">
+    <iq:application
+        entry="GymApp"
+        id="b12df9ce00fe48cbacb574cf7d70de42"
+        launcherIcon="@Drawables.LauncherIcon"
+        name="@Strings.AppName"
+        type="watch-app"
+        minApiLevel="3.1.0">
+
+        <!-- Dispositivos objetivo -->
+        <iq:products>
+            <iq:product id="venu"/>
+            <iq:product id="venusq"/>
+            <iq:product id="venusqm"/>
+        </iq:products>
+
+        <!-- Sin permisos especiales en v1 (todo es local) -->
+        <iq:permissions/>
+
+        <iq:languages>
+            <iq:language>eng</iq:language>
+            <iq:language>spa</iq:language>
+        </iq:languages>
+    </iq:application>
+</iq:manifest>

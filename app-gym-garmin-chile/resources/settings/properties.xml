@@ -1,0 +1,5 @@
+<properties>
+    <property id="defaultRest" type="number">90</property>
+    <property id="units" type="string">kg</property>
+    <property id="vibration" type="boolean">true</property>
+</properties>

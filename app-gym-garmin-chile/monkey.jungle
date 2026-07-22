@@ -1,0 +1,2 @@
+# Configuración de build del proyecto Connect IQ
+project.manifest = manifest.xml

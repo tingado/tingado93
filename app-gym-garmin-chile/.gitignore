@@ -1,0 +1,12 @@
+# Artefactos de build de Connect IQ
+bin/
+*.prg
+*.prg.debug.xml
+*.iq
+
+# Claves de firma (¡nunca subir!)
+*.der
+developer_key*
+
+# Config de editor
+.vscode/

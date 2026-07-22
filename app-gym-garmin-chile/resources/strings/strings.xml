@@ -1,0 +1,22 @@
+<strings>
+    <string id="AppName">Gym Garmin Chile</string>
+
+    <!-- Pantallas -->
+    <string id="ChooseSession">Elige sesión</string>
+    <string id="Rest">DESCANSO</string>
+    <string id="SessionComplete">SESIÓN\nCOMPLETA</string>
+    <string id="SetDone">Serie hecha</string>
+    <string id="Skip">Saltar</string>
+    <string id="Of">de</string>
+    <string id="Set">Serie</string>
+    <string id="Kg">kg</string>
+    <string id="Reps">reps</string>
+    <string id="Sec">s</string>
+
+    <!-- Ajustes (App Settings en Garmin Connect) -->
+    <string id="SettingDefaultRest">Descanso por defecto (s)</string>
+    <string id="SettingUnits">Unidades</string>
+    <string id="SettingUnitsKg">Kilogramos (kg)</string>
+    <string id="SettingUnitsLb">Libras (lb)</string>
+    <string id="SettingVibration">Vibración en avisos</string>
+</strings>

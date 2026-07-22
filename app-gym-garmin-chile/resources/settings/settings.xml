@@ -1,0 +1,19 @@
+<settings>
+    <!-- Descanso por defecto entre series (segundos) -->
+    <setting propertyKey="@Properties.defaultRest" title="@Strings.SettingDefaultRest">
+        <settingConfig type="numeric" min="10" max="600"/>
+    </setting>
+
+    <!-- Unidades de carga -->
+    <setting propertyKey="@Properties.units" title="@Strings.SettingUnits">
+        <settingConfig type="list">
+            <listEntry value="kg">@Strings.SettingUnitsKg</listEntry>
+            <listEntry value="lb">@Strings.SettingUnitsLb</listEntry>
+        </settingConfig>
+    </setting>
+
+    <!-- Vibración en avisos -->
+    <setting propertyKey="@Properties.vibration" title="@Strings.SettingVibration">
+        <settingConfig type="boolean"/>
+    </setting>
+</settings>
