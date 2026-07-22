@@ -13,7 +13,7 @@ Garmin y permita:
 - **Definir/seleccionar sesiones** de entrenamiento (ej. rutina de fuerza con varios ejercicios).
 - Registrar **cargas**: peso, reps y/o intensidad por serie.
 - Gestionar **pausas / descansos** con cuenta regresiva automática entre series.
-- **Avisar cuando la sesión está completa** (vibración + tono + pantalla; audio en modelos con altavoz).
+- **Avisar cuando la sesión está completa** (vibración + tono + pantalla grande).
 
 **Fuera de alcance (v1):** análisis histórico avanzado, planes de varios meses, integración
 con nutrición. Se contemplan como fases futuras.
@@ -25,7 +25,8 @@ con nutrición. Se contemplan como fases futuras.
 | Decisión | Elección |
 |---|---|
 | Enfoque | **App Connect IQ nativa** (Monkey C) |
-| Familia de dispositivo | **Venu / Vivoactive** (AMOLED; Venu 2/3 y Vivoactive 5 con altavoz) |
+| Dispositivos objetivo | **Venu (gen 1)** — principal · **Venu Sq** — compatible |
+| Repositorio | `app-gym-garmin-chile` (repo dedicado, privado) |
 | Lenguaje | Monkey C |
 | SDK | Connect IQ SDK (última versión estable) |
 | Creación de rutinas | **En el móvil** (Connect IQ App Settings en Garmin Connect) → sincroniza al reloj |
@@ -34,13 +35,24 @@ con nutrición. Se contemplan como fases futuras.
 > La app debe ser **ligera**: datos compactos, sin recursos pesados innecesarios y carga de
 > sesiones bajo demanda.
 
+### Dispositivos objetivo — implicaciones de diseño
+
+| | **Venu (gen 1)** | **Venu Sq** |
+|---|---|---|
+| Pantalla | **Redonda** AMOLED 390×390 | **Rectangular** MIP-LCD ~148×205 |
+| Altavoz | **No** | **No** |
+| Vibración / tonos | Sí | Sí |
+
+Consecuencias:
+- **Sin audio/voz:** ningún modelo tiene altavoz → los avisos son **vibración + tono + pantalla**. Se descarta el audio pregrabado.
+- **UI adaptable:** layout debe verse bien en **redondo (Venu)** y **rectangular más pequeño (Venu Sq)**. Usar layouts por dispositivo y evitar asumir centro/tamaño.
+- **MIP en Venu Sq:** menos colores y siempre encendida → priorizar **alto contraste** sobre gradientes/AMOLED puro.
+
 ### Nota técnica sobre "que diga sesiones completas"
-Connect IQ **no expone text-to-speech (TTS)** para frases arbitrarias. Los avisos se logran con:
-1. **Vibración** (`Toybox.Attention.vibrate`) — funciona en todos los modelos.
-2. **Tonos** (`Toybox.Attention.playTone`) — patrones distintos para "fin de serie", "descanso" y "sesión completa".
+Connect IQ **no expone text-to-speech (TTS)**, y además **estos modelos no tienen altavoz**. Los avisos se logran con:
+1. **Vibración** (`Toybox.Attention.vibrate`) — patrones distintos por evento.
+2. **Tonos** (`Toybox.Attention.playTone`) — "fin de serie", "descanso" y "sesión completa".
 3. **Pantalla clara**: mensaje grande tipo **"SESIÓN COMPLETA ✅"** con color y animación.
-4. **(Opcional) Audio pregrabado**: clips `.mp3`/`.wav` incluidos como recursos y reproducidos por el
-   altavoz en Venu 2/3 y Vivoactive 5. Es lo más cercano a una "voz" real.
 
 ---
 
@@ -55,8 +67,8 @@ Problemas detectados (los 4 confirmados por el usuario) y cómo los resolvemos:
 |---|---|
 | **Captura de datos tediosa** (girar ruedas / +/- a mitad de serie) | La rutina viene **prearmada desde el móvil**; en el reloj el gesto principal es **un botón grande "Serie hecha"**. Ajuste de carga solo si hace falta, con pasos rápidos (±2.5 kg). Mínimo input durante el esfuerzo. |
 | **No hay sesiones prearmadas** | **Creador de rutinas en el móvil** (App Settings) + rutinas de ejemplo; el reloj solo **ejecuta** lo ya definido. |
-| **Avisos / pausas pobres** | Módulo `Feedback` fuerte: **vibración marcada + tonos diferenciados por evento + pantalla grande + audio pregrabado** (modelos con altavoz). Descanso con **cuenta regresiva prominente**. |
-| **UI fea / poco clara** | Diseño **AMOLED limpio**: un dato principal por pantalla, números grandes, alto contraste, **color por estado** (ejercicio / descanso / completo). |
+| **Avisos / pausas pobres** | Módulo `Feedback` fuerte: **vibración marcada + tonos diferenciados por evento + pantalla grande**. Descanso con **cuenta regresiva prominente**. |
+| **UI fea / poco clara** | Diseño **limpio y de alto contraste**: un dato principal por pantalla, números grandes, **color por estado** (ejercicio / descanso / completo), adaptado a pantalla redonda (Venu) y rectangular (Venu Sq). |
 
 ---
 
@@ -126,7 +138,7 @@ App Connect IQ sigue **App → View → Delegate (Input)**:
 - **Servicios:**
   - `SessionManager` — estado, avance de series, marcar completada.
   - `Timer` (`Toybox.Timer`) — descansos y cuentas regresivas.
-  - `Feedback` — encapsula vibración/tono/audio.
+  - `Feedback` — encapsula vibración/tono (sin audio: los modelos objetivo no tienen altavoz).
 
 ---
 
@@ -142,9 +154,9 @@ App Connect IQ sigue **App → View → Delegate (Input)**:
 
 ### Fase 2 — Feedback y experiencia
 - [ ] Patrones de tono/vibración diferenciados por evento.
-- [ ] (Modelos con altavoz) clips de audio pregrabados.
+- [ ] Layouts diferenciados para pantalla redonda (Venu) y rectangular (Venu Sq).
 - [ ] Registro de cargas por serie y persistencia local del progreso.
-- [ ] UI pulida para AMOLED (colores, tipografías, layout táctil).
+- [ ] UI pulida y de alto contraste (colores, tipografías, layout táctil) para Venu y Venu Sq.
 - **Entregable:** app usable y agradable en dispositivo real.
 
 ### Fase 3 — Personalización desde el móvil
@@ -164,9 +176,9 @@ App Connect IQ sigue **App → View → Delegate (Input)**:
 
 ## 7. Pruebas
 
-- **Simulador** por modelo (Venu 2/3, Vivoactive 5): verificar layouts y capacidades de audio.
+- **Simulador** por modelo (**Venu** y **Venu Sq**): verificar layouts redondo vs. rectangular.
 - **Casos clave:** avanzar serie, saltar descanso, pausar/reanudar, completar sesión, salir a mitad y retomar.
-- **Hardware real:** validar vibración/tono/audio y consumo de batería en una sesión larga.
+- **Hardware real:** validar vibración/tono y consumo de batería en una sesión larga.
 
 ---
 
@@ -182,7 +194,8 @@ App Connect IQ sigue **App → View → Delegate (Input)**:
 
 | Riesgo | Mitigación |
 |---|---|
-| Sin TTS nativo para "voz" | Usar tonos/vibración + audio pregrabado en modelos con altavoz |
+| Sin TTS ni altavoz (Venu/Venu Sq) | Avisos por tonos + vibración + pantalla grande |
+| Dos formas de pantalla (redonda/rectangular) | Layouts por dispositivo; no asumir tamaño/centro fijos |
 | Capacidades varían por modelo | Detección en runtime (`System.getDeviceSettings`) y `has :feature` |
 | Memoria limitada del reloj | Datos compactos, cargar sesiones bajo demanda |
 | Curva de Monkey C | Empezar por el MVP y ejemplos oficiales del SDK |
@@ -191,8 +204,8 @@ App Connect IQ sigue **App → View → Delegate (Input)**:
 
 ## 10. Próximos pasos inmediatos
 
-1. Confirmar **modelos exactos** de Venu/Vivoactive (define si hay altavoz para audio).
-2. Montar entorno (Fase 0) y proyecto base que compile en el simulador.
+1. Crear el repo dedicado **`app-gym-garmin-chile`** y migrar ahí este plan + el esqueleto.
+2. Montar entorno (Fase 0) y proyecto base que compile en el simulador de **Venu** y **Venu Sq**.
 3. Definir **1 sesión de ejemplo real** tuya (ejercicios, series, cargas, descansos) para probar el MVP.
 4. Arrancar **Fase 1**.
 
