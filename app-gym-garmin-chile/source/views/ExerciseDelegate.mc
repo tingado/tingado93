@@ -43,4 +43,19 @@ class ExerciseDelegate extends WatchUi.BehaviorDelegate {
     public function onTap(evt as WatchUi.ClickEvent) as Boolean {
         return markSetDone();
     }
+
+    // Deslizar arriba/abajo ajusta la carga de la serie actual (±2.5).
+    public function onSwipe(evt as WatchUi.SwipeEvent) as Boolean {
+        var dir = evt.getDirection();
+        if (dir == WatchUi.SWIPE_UP) {
+            _m.adjustCurrentLoad(2.5);
+            WatchUi.requestUpdate();
+            return true;
+        } else if (dir == WatchUi.SWIPE_DOWN) {
+            _m.adjustCurrentLoad(-2.5);
+            WatchUi.requestUpdate();
+            return true;
+        }
+        return false;
+    }
 }

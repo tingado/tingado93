@@ -3,6 +3,9 @@
 > App para **crear y guiar sesiones de entrenamiento** en el reloj: definir sesiones,
 > cargas (peso/intensidad), pausas (descansos) y avisar cuando una sesión queda **completa**.
 
+📓 **Documentación viva (ideas, roadmap, sesiones y avances):**
+[App Gym Garmin Chile — Notion](https://app.notion.com/p/3a5256ea42c581fb8187d38597335e0b)
+
 ---
 
 ## 1. Objetivo y alcance

@@ -7,6 +7,9 @@ recibe un aviso claro cuando la **sesión está completa**.
 > Dispositivos objetivo: **Garmin Venu (gen 1)** y **Venu Sq**.
 > Estos modelos **no tienen altavoz**, así que los avisos son **vibración + tono + pantalla**.
 
+📓 **Documentación (ideas, roadmap, sesiones, avances):** [Notion](https://app.notion.com/p/3a5256ea42c581fb8187d38597335e0b)
+📋 **Plan de trabajo:** [PLAN.md](./PLAN.md)
+
 ## Estado
 
 Esqueleto funcional (Fase 0 + inicio de Fase 1 del [plan de trabajo](../PLAN.md)):

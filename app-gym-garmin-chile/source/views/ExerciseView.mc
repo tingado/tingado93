@@ -42,7 +42,7 @@ class ExerciseView extends WatchUi.View {
         // Dato principal: reps x carga (grande).
         dc.setColor(Graphics.COLOR_WHITE, Graphics.COLOR_TRANSPARENT);
         var main = (set.load > 0)
-            ? set.reps + " x " + set.load + " " + units()
+            ? set.reps + " x " + set.loadLabel() + " " + units()
             : set.reps + " reps";
         dc.drawText(cx, h * 0.46, Graphics.FONT_NUMBER_MEDIUM, main, Graphics.TEXT_JUSTIFY_CENTER);
 
@@ -57,9 +57,11 @@ class ExerciseView extends WatchUi.View {
         dc.setColor(Graphics.COLOR_GREEN, Graphics.COLOR_TRANSPARENT);
         dc.fillRectangle(barX, barY, (barW * done / total).toNumber(), 6);
 
-        // Hint de acción.
+        // Hints de acción.
         dc.setColor(Graphics.COLOR_LT_GRAY, Graphics.COLOR_TRANSPARENT);
-        dc.drawText(cx, h * 0.84, Graphics.FONT_TINY,
+        dc.drawText(cx, h * 0.83, Graphics.FONT_TINY,
             done + "/" + total + " · toca: serie hecha", Graphics.TEXT_JUSTIFY_CENTER);
+        dc.drawText(cx, h * 0.90, Graphics.FONT_TINY,
+            "desliza ↑↓: ±2.5 " + units(), Graphics.TEXT_JUSTIFY_CENTER);
     }
 }

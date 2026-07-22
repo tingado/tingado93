@@ -47,6 +47,13 @@ class SessionManager {
         return currentExercise().restSeconds;
     }
 
+    // Ajusta la carga de la serie actual (ej. ±2.5 kg), sin bajar de 0.
+    public function adjustCurrentLoad(delta as Float) as Void {
+        var set = currentSet();
+        var newLoad = set.load + delta;
+        set.load = (newLoad < 0.0) ? 0.0 : newLoad;
+    }
+
     // Marca la serie actual como hecha y avanza el puntero.
     // Devuelve true si la sesión quedó COMPLETA.
     public function completeCurrentSet() as Boolean {

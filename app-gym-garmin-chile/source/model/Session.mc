@@ -9,13 +9,21 @@ import Toybox.Lang;
 // Una serie individual: reps + carga.
 class ExerciseSet {
     public var reps as Number;
-    public var load as Number;      // en la unidad configurada (kg/lb)
+    public var load as Float;        // en la unidad configurada (kg/lb); permite pasos de 2.5
     public var done as Boolean;
 
-    public function initialize(reps as Number, load as Number) {
+    public function initialize(reps as Number, load as Float) {
         self.reps = reps;
         self.load = load;
         self.done = false;
+    }
+
+    // Etiqueta de carga sin ".0" sobrante: 40 -> "40", 42.5 -> "42.5".
+    public function loadLabel() as String {
+        if (load == load.toNumber()) {
+            return load.toNumber().toString();
+        }
+        return load.format("%.1f");
     }
 }
 

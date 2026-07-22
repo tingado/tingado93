@@ -18,18 +18,18 @@ module SampleData {
     function fullBody() as Session {
         return new Session("Full Body A", [
             new Exercise("Sentadilla", [
-                new ExerciseSet(10, 40),
-                new ExerciseSet(10, 40),
-                new ExerciseSet(8, 45)
+                new ExerciseSet(10, 40.0),
+                new ExerciseSet(10, 40.0),
+                new ExerciseSet(8, 45.0)
             ], 90),
             new Exercise("Press banca", [
-                new ExerciseSet(10, 30),
-                new ExerciseSet(10, 30),
-                new ExerciseSet(8, 35)
+                new ExerciseSet(10, 30.0),
+                new ExerciseSet(10, 30.0),
+                new ExerciseSet(8, 35.0)
             ], 90),
             new Exercise("Remo con barra", [
-                new ExerciseSet(12, 30),
-                new ExerciseSet(12, 30)
+                new ExerciseSet(12, 30.0),
+                new ExerciseSet(12, 30.0)
             ], 75)
         ]);
     }
@@ -37,12 +37,12 @@ module SampleData {
     function pushDay() as Session {
         return new Session("Empuje", [
             new Exercise("Press militar", [
-                new ExerciseSet(10, 25),
-                new ExerciseSet(8, 27)
+                new ExerciseSet(10, 25.0),
+                new ExerciseSet(8, 27.5)
             ], 90),
             new Exercise("Fondos", [
-                new ExerciseSet(12, 0),
-                new ExerciseSet(10, 0)
+                new ExerciseSet(12, 0.0),
+                new ExerciseSet(10, 0.0)
             ], 60)
         ]);
     }
